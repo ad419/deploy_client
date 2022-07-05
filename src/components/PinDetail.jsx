@@ -266,6 +266,7 @@ const PinDetail = ({ user, save, _id, postedBy }) => {
             </div>
           </div>
         </div>
+        
       )}
       {pins?.length > 0 && (
         <h2 className="text-center font-bold text-2xl mt-8 mb-4">
