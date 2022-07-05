@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import { MdDownloadForOffline } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import { BsBookmarkPlus } from "react-icons/bs";
-import { BsHeartFill } from "react-icons/bs";
-import { BsHeart } from "react-icons/bs";
 import { client, urlFor } from "../client";
 import MasonryLayout from "./MasonryLayout";
-import { feedQuery } from "../utils/data";
+
 import Spinner from "./Spinner";
-import { BiTrash } from "react-icons/bi";
+
 import { Helmet } from "react-helmet";
 import { pinDetailQuery, pinDetailMorePinQuery } from "../utils/data";
 
 import { HiOutlinePaperAirplane } from "react-icons/hi";
+
+import { GoVerified } from "react-icons/go";
+import { MdOutlineVerifiedUser } from "react-icons/md";
 
 const PinDetail = ({ user, save, _id, postedBy }) => {
   const { pinId } = useParams();
@@ -132,34 +131,6 @@ const PinDetail = ({ user, save, _id, postedBy }) => {
                 >
                   <MdDownloadForOffline />
                 </a>
-
-                {alreadySaved ? (
-                  <button
-                    type="button"
-                    className="bg-gray-700 text-black opacity-70 hover:opacity-100 text-white font-bold  h-9 w-9 text-base rounded-3xl hover:shadow-md outline-none flex items-center justify-center"
-                  >
-                    <h1 className="absolute text-lg flex right-12 mr-1 text-white">
-                      {save?.length}
-                    </h1>
-                    <BsHeartFill style={{ color: "red" }} />
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        savePin(pinId);
-                      }}
-                      type="button"
-                      className="bg-gray-300 text-black opacity-70 hover:opacity-100 text-white font-bold  h-9 w-9 text-base rounded-3xl hover:shadow-md outline-none flex items-center justify-center"
-                    >
-                      <BsHeart />
-                    </button>
-                    <h1 className="absolute text-lg flex right-12 mr-1 text-black">
-                      {save?.length}
-                    </h1>
-                  </>
-                )}
               </div>
               <a href={pinDetail.destination} target="_blank" rel="noreferrer">
                 {pinDetail.destination?.slice(8)}
@@ -189,14 +160,26 @@ const PinDetail = ({ user, save, _id, postedBy }) => {
                 alt="user-profile"
               />
               {pinDetail?.postedBy.userName === "Updater XD" && (
-                <p className="font-bold text-orange-500">
-                  {pinDetail?.postedBy.userName}
+                <p className="font-bold gap-2 flex text-orange-500">
+                  {pinDetail?.postedBy.userName}{" "}
+                  <GoVerified
+                    size={20}
+                    style={{ marginTop: 3 }}
+                    color="#2BBDCF"
+                  />
                 </p>
               )}
               {pinDetail?.postedBy.userName === "Nazif Kotorri" ? (
-                <p className="font-bold text-green-500">
-                  {pinDetail?.postedBy.userName}
-                </p>
+                <div className="flex gap-2">
+                  <p className="font-bold gap-2 text-green-500">
+                    {pinDetail?.postedBy.userName}
+                  </p>
+                  <MdOutlineVerifiedUser
+                    size={21}
+                    color="green"
+                    style={{ marginTop: 3 }}
+                  />
+                </div>
               ) : (
                 <p className="font-bold"></p>
               )}
@@ -214,7 +197,36 @@ const PinDetail = ({ user, save, _id, postedBy }) => {
                     alt="user-profile"
                   />
                   <div className="flex flex-col">
-                    <p className="font-bold">{item.postedBy?.userName}</p>
+                    {item.postedBy?.userName === "Updater XD" ? (
+                      <div className="flex gap-2">
+                        <p className="font-bold">{item.postedBy?.userName}</p>
+                        <GoVerified
+                          size={20}
+                          style={{ marginTop: 3 }}
+                          color="#2BBDCF"
+                        />
+                      </div>
+                    ) : (
+                      <div className="">
+                        <p className="font-bold">{item.postedBy?.userName}</p>
+                      </div>
+                    )}
+                    {item.postedBy?.userName === "Nazif Kotorri" ? (
+                      <div className="flex gap-2">
+                        <p className="font-bold hidden">
+                          {item.postedBy?.userName}
+                        </p>
+                        <MdOutlineVerifiedUser
+                          size={21}
+                          color="green"
+                          style={{ marginTop: 3 }}
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-bold"></p>
+                      </div>
+                    )}
 
                     {item.postedBy?.userName === "Updater XD" ? (
                       <p className="font-bold text-orange-500">

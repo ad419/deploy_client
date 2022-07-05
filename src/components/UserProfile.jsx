@@ -13,6 +13,12 @@ import { client } from "../client";
 import MasonryLayout from "./MasonryLayout";
 import Spinner from "./Spinner";
 import { Helmet } from "react-helmet";
+import { GoVerified } from "react-icons/go";
+import { MdOutlineVerifiedUser } from "react-icons/md";
+
+
+
+
 
 const activeBtnStyles =
   "bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none";
@@ -26,6 +32,8 @@ const UserProfile = () => {
   const [activeBtn, setActiveBtn] = useState("created");
   const navigate = useNavigate();
   const { userId } = useParams();
+
+
 
   const User =
     localStorage.getItem("user") !== "undefined"
@@ -63,6 +71,8 @@ const UserProfile = () => {
 
   if (!user) return <Spinner message="Loading profile" />;
 
+  
+
   return (
     <>
       <Helmet>
@@ -83,9 +93,36 @@ const UserProfile = () => {
                 alt="user-pic"
               />
             </div>
-            <h1 className="font-bold text-3xl text-center mt-3">
-              {user.userName}
-            </h1>
+
+            {user.userName === "Updater XD" ||
+            user.userName === "Nazif Kotorri" ? (
+              <div className="flex justify-center">
+                <h1 className="font-bold text-3xl text-center mt-3">
+                  {user.userName}
+                </h1>
+                {user.userName === "Updater XD" && (
+                  <GoVerified
+                    style={{ marginTop: 21, marginLeft: 9 }}
+                    size={20}
+                    color="#2BBDCF"
+                  />
+                )}
+                {user.userName === "Nazif Kotorri" && (
+                  <MdOutlineVerifiedUser
+                    style={{ marginTop: 22, marginLeft: 9 }}
+                    size={20}
+                    color="green"
+                  />
+                )}
+              </div>
+            ) : (
+              <div>
+                <h1 className="font-bold text-3xl text-center mt-3">
+                  {user.userName}
+                </h1>
+              </div>
+            )}
+
             <div className="absolute top-2 mt-1 mr-1 z-1 right-3">
               {userId === User.googleId && (
                 <GoogleLogout

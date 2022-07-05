@@ -8,7 +8,9 @@ import { fetchUser } from "../utils/fetchUser";
 import { BiTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import Owner from "./Owner";
+
+import { GoVerified } from "react-icons/go";
+import { MdOutlineVerifiedUser } from "react-icons/md";
 
 const Pin = ({ pin: { postedBy, image, _id, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
@@ -61,21 +63,6 @@ const Pin = ({ pin: { postedBy, image, _id, save } }) => {
         onMouseLeave={() => setPostHovered(false)}
       >
         <div>
-          <div className="flex absolute bottom-2 justify-between items-center gap-2 w-full">
-            {postedBy?._id === user?.googleId && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deletePin(_id);
-                }}
-                type="button"
-              >
-                <div className="text-white text-xl ml-3 bg-red-400 h-7 w-7 flex items-center justify-center rounded-full">
-                  <BiTrash />
-                </div>
-              </button>
-            )}
-          </div>
           <img
             className="w-full"
             src={urlFor(image).width(250).url()}
@@ -94,6 +81,22 @@ const Pin = ({ pin: { postedBy, image, _id, save } }) => {
                 >
                   <MdDownloadForOffline />
                 </a>
+              </div>
+              <div className="flex absolute bottom-2 justify-between items-center gap-2 w-full">
+                {postedBy?._id === user?.googleId && (
+                  <button
+                    style={{ zIndex: 20 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePin(_id);
+                    }}
+                    type="button"
+                  >
+                    <div className="text-white text-xl ml-3 bg-red-400 h-7 w-7 flex items-center justify-center rounded-full">
+                      <BiTrash />
+                    </div>
+                  </button>
+                )}
               </div>
 
               {alreadySaved ? (
@@ -139,14 +142,14 @@ const Pin = ({ pin: { postedBy, image, _id, save } }) => {
             {postedBy?.userName}
           </p>
           {postedBy.userName === "Updater XD" && (
-            <p className="bg-orange-400 rounded-xl p-1 ml-3 text-white items-center">
-              owner
-            </p>
+            <GoVerified size={20} style={{ marginTop: 3 }} color="#2BBDCF" />
           )}
           {postedBy.userName === "Nazif Kotorri" && (
-            <p className="bg-green-700 text-white items-center rounded-xl p-2 ml-3">
-              co-owner
-            </p>
+            <MdOutlineVerifiedUser
+              size={21}
+              color="green"
+              style={{ marginTop: 3 }}
+            />
           )}
         </Link>
 
