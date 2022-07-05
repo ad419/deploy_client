@@ -98,6 +98,7 @@ const Pin = ({ pin: { postedBy, image, _id, save } }) => {
                   </button>
                 )}
               </div>
+            
               {alreadySaved ? (
                 <button
                   type="button"
